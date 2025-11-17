@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroPredict - Your Life's Cosmic Journey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="stars"></div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">✨ AstroPredict</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#predict">Predictions</a></li>
+                <li><a href="#zodiac">Zodiac</a></li>
+                <li><a href="#compatibility">Compatibility</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Discover Your Cosmic Destiny</h1>
+            <p>Unlock the mysteries of your birth chart and explore your life path through astrology</p>
+            <a href="#predict" class="cta-button">Get Your Prediction Now</a>
+        </div>
+    </section>
+    
+    <section id="predict" class="prediction-section">
+        <div class="container">
+            <h2>Your Personal Astrological Report</h2>
+            <p class="section-subtitle">Enter your birth details to receive accurate predictions and insights</p>
+            
+            <div class="form-container">
+                <form id="predictionForm" class="prediction-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gender">Gender *</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birth_date">Date of Birth *</label>
+                            <input type="date" id="birth_date" name="birth_date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birth_time">Time of Birth *</label>
+                            <input type="time" id="birth_time" name="birth_time" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="latitude">Latitude of Birth Place *</label>
+                            <input type="number" id="latitude" name="latitude" required step="0.0001" placeholder="e.g., 28.6139" min="-90" max="90">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="longitude">Longitude of Birth Place *</label>
+                            <input type="number" id="longitude" name="longitude" required step="0.0001" placeholder="e.g., 77.2090" min="-180" max="180">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="place">Place of Birth *</label>
+                            <input type="text" id="place" name="place" required placeholder="City, Country">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Generate My Prediction</button>
+                </form>
+                
+                <div class="location-hint">
+                    <p><strong>Need coordinates?</strong> Search your birth place on <a href="https://www.google.com/maps" target="_blank">Google Maps</a> or use our location helper below.</p>
+                    <input type="text" id="locationSearch" placeholder="Search city or location..." class="location-search">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="results" class="results-section" style="display: none;">
+        <div class="container">
+            <div class="results-header">
+                <h2>Your Astrological Profile</h2>
+                <button class="close-btn" onclick="closeResults()">×</button>
+            </div>
+            
+            <div class="results-grid">
+                <div class="card birth-chart-card">
+                    <h3>🌙 Your Birth Chart</h3>
+                    <div id="birthChartContent"></div>
+                </div>
+                
+                <div class="card characteristics-card">
+                    <h3>⭐ Your Characteristics</h3>
+                    <div id="characteristicsContent"></div>
+                </div>
+                
+                <div class="card current-phase-card">
+                    <h3>📍 Current Life Phase</h3>
+                    <div id="currentPhaseContent"></div>
+                </div>
+                
+                <div class="card past-card">
+                    <h3>🌅 Your Past (Birth to Now)</h3>
+                    <div id="pastContent"></div>
+                </div>
+                
+                <div class="card present-card">
+                    <h3>🌞 Your Present</h3>
+                    <div id="presentContent"></div>
+                </div>
+                
+                <div class="card future-card">
+                    <h3>🌟 Your Future (Next 10 Years)</h3>
+                    <div id="futureContent"></div>
+                </div>
+                
+                <div class="card advice-card full-width">
+                    <h3>💎 Personalized Advice</h3>
+                    <div id="adviceContent"></div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button onclick="printResults()" class="btn-secondary">🖨️ Print Report</button>
+                <button onclick="downloadResults()" class="btn-secondary">⬇️ Download PDF</button>
+                <button onclick="shareResults()" class="btn-secondary">📤 Share Results</button>
+                <button onclick="newPrediction()" class="btn-primary">✨ New Prediction</button>
+            </div>
+        </div>
+    </section>
+    
+    <section id="zodiac" class="zodiac-section">
+        <div class="container">
+            <h2>The Zodiac</h2>
+            <p class="section-subtitle">Explore all 12 zodiac signs and their characteristics</p>
+            
+            <div id="zodiacGrid" class="zodiac-grid"></div>
+        </div>
+    </section>
+    
+    <section id="compatibility" class="compatibility-section">
+        <div class="container">
+            <h2>Zodiac Compatibility</h2>
+            <p class="section-subtitle">Check compatibility between two zodiac signs</p>
+            
+            <div class="compatibility-form">
+                <select id="sign1" class="sign-select">
+                    <option value="">Select First Sign</option>
+                </select>
+                
+                <span class="compatibility-icon">♥️</span>
+                
+                <select id="sign2" class="sign-select">
+                    <option value="">Select Second Sign</option>
+                </select>
+                
+                <button onclick="checkCompatibility()" class="submit-btn">Check Compatibility</button>
+            </div>
+            
+            <div id="compatibilityResult" class="compatibility-result" style="display: none;">
+                <div class="compatibility-score-display"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>About AstroPredict</h2>
+            <p>
+                AstroPredict is a comprehensive astrology platform that combines ancient astrological wisdom with modern 
+                scientific calculations. Our AI-powered system analyzes your birth chart, zodiac sign, planetary positions, 
+                and numerology to provide accurate predictions for your life journey.
+            </p>
+            <p>
+                Whether you're seeking guidance in relationships, career, health, or finances, our detailed reports offer 
+                personalized insights based on your unique cosmic blueprint.
+            </p>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 AstroPredict. All rights reserved. | 
+                <a href="#privacy">Privacy Policy</a> | 
+                <a href="#terms">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+    
+    <div id="loadingSpinner" class="spinner" style="display: none;">
+        <div class="spinner-border"></div>
+        <p>Calculating your cosmic destiny...</p>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
